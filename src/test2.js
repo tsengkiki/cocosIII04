@@ -1,37 +1,62 @@
 
 var Test2Layer = cc.Layer.extend({
-    sprite:null,
+    ball:null,
+    dx :4,
+    dy :4,
+    //dx=dy,所以角度是90
     ctor:function () {
-        //////////////////////////////
-        // 1. super init first
-        this._super();
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask the window size
+        this._super();
         var size = cc.winSize;
 
-        /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        var helloLabel = new cc.LabelTTF("Hello World", "Arial", 38);
-        // position the label on the center of the screen
-        helloLabel.x = size.width / 2;
-        helloLabel.y = size.height / 2 + 200;
-        // add the label as a child to this layer
-        this.addChild(helloLabel, 5);
-
-        // add "HelloWorld" splash screen"
-        this.sprite = new cc.Sprite(res.HelloWorld_png);
-        this.sprite.attr({
-            x: size.width / 2,
-            y: size.height / 2
+        this.ball = new cc.Sprite(res.ball_png);
+        this.ball.attr({
+            x: size.width /2,
+            y: size.height /2
         });
-        this.addChild(this.sprite, 0);
+        // this.ball.scaleX = 2;
+        // this.ball.scaleY = 2;
+        this.addChild(this.ball);
+
+        this.scheduleUpdate();
 
         return true;
+    },
+    update:function(dt){
+        if (this.ball.x + this.ball.width /2 >= cc.winSize.width ||
+            this.ball.x - this.ball.width /2 <= 0){
+            this.dx *= -1;
+
+        }
+
+        if (this.ball.y + this.ball.height /2 >= cc.winSize.height ||
+            this.ball.y - this.ball.height /2 <= 0){
+            this.dy *= -1;
+
+        }
+
+        if(this.dx >0){
+            // - => + 球往右跑
+            if(this.dy>0){
+                //ang => 90 球往上跑
+                this.ball.runAction(cc.rotateBy(0.4,-90));
+            }else{
+                //ang => -90 球往下跑
+                this.ball.runAction(cc.rotateBy(0.4,90));
+            }
+        }else{
+            // + => -   球往左跑
+            if(this.dy>0){
+                //ang => 90 球往上跑
+                this.ball.runAction(cc.rotateBy(0.4,-90));
+            }else{
+                //ang => -90 球往下跑
+                this.ball.runAction(cc.rotateBy(0.4,90));
+            }
+        }
+
+        this.ball.x += this.dx;
+        this.ball.y += this.dy;
     }
 });
 

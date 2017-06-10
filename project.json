@@ -14,7 +14,8 @@
     "jsList" : [
         "src/resource.js",
         "src/app.js",
-        "src/Temp.js",
-        "src/test1.js"
+        "src/temp.js",
+        "src/test1.js",
+        "src/test2.js"
     ]
 }
